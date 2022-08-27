@@ -10,6 +10,60 @@ namespace myfinance_web_netcore.Domain
 {
     public class Transacao
     {
+        public void Inserir(TransacaoModel formulario)
+        {
+            var objDAL = DAL.GetInstance();
+            objDAL.Conectar();
+            var sql = "INSERT INTO TRANSACAO (data, valor, tipo, historico, id_plano_conta)" +
+                "VALUES(" +
+                $"' {formulario.Data.ToString("yyyy-MM-dd")}'," +
+                $"{formulario.Valor}," +
+                $"'{formulario.Tipo}'," +
+                $"'{formulario.Historico}'," +
+                $"{formulario.IdPlanoConta})";
+
+            objDAL.ExecutarComandoSQL(sql);
+            objDAL.Desconectar();
+        }
+
+        public void Atualizar(TransacaoModel formulario)
+        {
+            var objDAL = DAL.GetInstance();
+            objDAL.Conectar();
+            var sql = "UPDATE TRANSACAO SET " +
+                $"Historico = '{formulario.Historico}'," +
+                $"Tipo = '{formulario.Tipo}', " +
+                $"Valor = {formulario.Valor}," +
+                $"Data = '{formulario.Data.ToString("yyyy-MM-dd")}'," +
+                $"id_plano_conta = '{formulario.IdPlanoConta}'" +
+                $"WHERE id = {formulario.Id}";
+            objDAL.ExecutarComandoSQL(sql);
+            objDAL.Desconectar();
+        }
+
+        public TransacaoModel CarregarTransacaoPorId(int? id)
+        {
+            var objDAL = DAL.GetInstance();
+            objDAL.Conectar();
+
+            var sql = $"SELECT ID, DESCRICAO, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO WHERE ID = {id}";
+            var dataTable = objDAL.RetornaDataTable(sql);
+
+            var transacao = new TransacaoModel()
+            {
+                Id = int.Parse(dataTable.Rows[0]["ID"].ToString()),
+                Historico = dataTable.Rows[0]["HISTORICO"].ToString(),
+                Tipo = dataTable.Rows[0]["TIPO"].ToString(),
+                Data = DateTime.Parse(dataTable.Rows[0]["DATA"].ToString()),
+                Valor = decimal.Parse(dataTable.Rows[0]["VALOR"].ToString()),
+                IdPlanoConta = int.Parse(dataTable.Rows[0]["ID_PLANO_CONTA"].ToString()),
+            };
+
+            objDAL.Desconectar();
+
+            return transacao;
+        }
+
         public List<TransacaoModel> ListaTransacoes()
         {
             List<TransacaoModel> lista = new List<TransacaoModel>();

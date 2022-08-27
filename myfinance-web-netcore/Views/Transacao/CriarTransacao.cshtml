@@ -1,20 +1,81 @@
+@using System.Globalization
 @model TransacaoModel
 
 @{
-    ViewData["Title"] = "Plano de Contas";
+    ViewData["Title"] = "Transações";
 }
 
+@{
+    var vData = "";
+    var vDescricao = "";
+    var vTipo = "";
+    var vValor = "";
+    var vId = 0;
+    var vPlanoContaId = 0;
+
+    try
+    {
+        vId = int.Parse(@ViewBag.Registro.Id.ToString());
+        vData = DateTime.Parse(@ViewBag.Registro.Data.ToString()).ToString("yyyy-MM-dd");
+        vPlanoContaId = int.Parse(@ViewBag.Registro.IdPlanoConta.ToString());
+        vDescricao = @ViewBag.Registro.Historico.ToString();
+        vTipo = @ViewBag.Registro.Tipo.ToString();
+
+        CultureInfo invC = CultureInfo.InvariantCulture;
+        string value;
+        value = @ViewBag.Registro.Valor.ToString(invC);
+        vValor = value;
+    }
+    catch { }
+}
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="PlanoConta" asp-action="CriarPlanoConta">
-    <input type="hidden" asp-for="Id">
+<form asp-controller="Transacao" asp-action="CriarTransacao">
+    <input type="hidden" asp-for="Id" value="@vId">
 
-    <label for="descricao">Descrição: </label>
-    <input type="text" asp-for="Valor">
+    <div class="form-group">
+        <label>Data:</label>
+        <input type="date" class="form-control" asp-for="Data" value="@vData">
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
 
-    <label for="descricao">Tipo: </label>
-    <input type="text" asp-for="Tipo">
+    <div class="form-group">
+        <label>Tipo:</label>
+        <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
+    </div>
+
+    <div class="form-group">
+        <label>Valor:</label>
+        <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
+        <span asp-validation-for="Valor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Histórico:</label>
+        @Html.TextArea("Historico", vDescricao, new { @class = "form-control" })
+        <span asp-validation-for="Historico" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Plano de Contas:</label>
+        <select asp-for="IdPlanoConta" class="form-control">
+            @{
+                foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
+                {
+                    if (item.Id.ToString() == vPlanoContaId.ToString())
+                    {
+                        <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                    }
+                }
+
+            }
+        </select>
+    </div>
 
     <button type="submit" class="btn btn-block btn-success">Registrar</button>
 
