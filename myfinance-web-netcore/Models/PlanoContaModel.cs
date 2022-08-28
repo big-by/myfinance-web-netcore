@@ -39,9 +39,9 @@ namespace myfinance_web_netcore.Models
             var objDAL = DAL.GetInstance();
             objDAL.Conectar();
 
-            var sql = $"UPDATE PLANO_CONTAS SET" +
+            var sql = $"UPDATE PLANO_CONTAS SET " +
                 $"Descricao = '{Descricao}'," +
-                $"Tipo = '{Tipo}' " +
+                $"Tipo = '{Tipo}'" +
                 $"WHERE id = {id}";
             objDAL.ExecutarComandoSQL(sql);
             objDAL.Desconectar();

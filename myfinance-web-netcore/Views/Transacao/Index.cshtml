@@ -4,9 +4,6 @@
 
 <h3>Transação</h3>
 <hr>
-<button type="button" class="btn btn-block btn-primary" onClick="CriarPlanoConta()">
-    Criar transação
-</button>
 
 <table class="table table-bordered">
     <tr>
@@ -44,6 +41,9 @@
     }
 
 </table>
+<button type="button" class="btn btn-block btn-primary" onclick="CriarTransacao()">
+    Criar transação
+</button>
 
 <script>
     function CriarTransacao() {
@@ -51,7 +51,7 @@
     }
 
     function EditarTransacao(id) {
-        window.location.href = "../Transacao/CriarTransacao/" = id;
+        window.location.href = "../Transacao/CriarTransacao/" + id;
 
     }
 

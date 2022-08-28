@@ -27,11 +27,12 @@ namespace myfinance_web_netcore.Controllers
         [HttpGet]
         public IActionResult CriarPlanoConta(int? id)
         {
-            if (id != null) {
+            if (id != null)
+            {
                 var planoConta = new PlanoContaModel().CarregarPlanoContaPorId(id);
                 ViewBag.PlanoConta = planoConta;
             }
-                return View();
+            return View();
         }
 
         [HttpPost]
@@ -49,7 +50,7 @@ namespace myfinance_web_netcore.Controllers
         public IActionResult ExcluirPlanoConta(int id)
         {
             new PlanoContaModel().Excluir(id);
-            return View();
+            return RedirectToAction("Index");
         }
 
     }

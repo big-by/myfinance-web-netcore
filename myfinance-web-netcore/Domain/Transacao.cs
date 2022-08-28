@@ -46,7 +46,7 @@ namespace myfinance_web_netcore.Domain
             var objDAL = DAL.GetInstance();
             objDAL.Conectar();
 
-            var sql = $"SELECT ID, DESCRICAO, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO WHERE ID = {id}";
+            var sql = $"SELECT ID, HISTORICO, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO WHERE ID = {id}";
             var dataTable = objDAL.RetornaDataTable(sql);
 
             var transacao = new TransacaoModel()
@@ -64,12 +64,22 @@ namespace myfinance_web_netcore.Domain
             return transacao;
         }
 
+        public void Excluir(int id)
+        {
+            var objDAL = DAL.GetInstance();
+            objDAL.Conectar();
+
+            var sql = $"DELETE FROM TRANSACAO WHERE ID={id}";
+            objDAL.ExecutarComandoSQL(sql);
+            objDAL.Desconectar();
+        }
+
         public List<TransacaoModel> ListaTransacoes()
         {
             List<TransacaoModel> lista = new List<TransacaoModel>();
             var objDAL = DAL.GetInstance();
             objDAL.Conectar();
-            var sql = "SELECT ID, DESCRICAO, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO";
+            var sql = "SELECT ID, DATA, VALOR, TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO";
             var dataTable = objDAL.RetornaDataTable(sql);
 
             for (int i = 0; i < dataTable.Rows.Count; i++)

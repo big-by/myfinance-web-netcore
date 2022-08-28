@@ -49,6 +49,14 @@ namespace myfinance_web_netcore.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult ExcluirTransacao(int id)
+        {
+            new Transacao().Excluir(id);
+            return RedirectToAction("Index");
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
