@@ -32,58 +32,60 @@
 <h1>@ViewData["Title"]</h1>
 
 <form asp-controller="Transacao" asp-action="CriarTransacao">
-    <input type="hidden" asp-for="Id">
+    <fieldset>
+        <input type="hidden" asp-for="Id">
 
-    <div class="form-group">
-        <label>Data:</label>
-        <input type="date" class="form-control" asp-for="Data" value="@vData">
-        <span asp-validation-for="Data" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-2">
+            <label class="form-label mt-2">Data:</label>
+            <input type="date" class="form-control" asp-for="Data" value="@vData">
+            <span asp-validation-for="Data" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Tipo:</label>
-        <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
-    </div>
+        <div class="form-group mb-2">
+            <label class="form-label mt-2">Tipo:</label>
+            <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
+        </div>
 
-    <div class="form-group">
-        <label>Valor:</label>
-        <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
-        <span asp-validation-for="Valor" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-2">
+            <label class="form-label mt-2">Valor:</label>
+            <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Histórico:</label>
-        @Html.TextArea("Historico", vDescricao, new { @class = "form-control" })
-        <span asp-validation-for="Historico" class="text-danger"></span>
-    </div>
+        <div class="form-group mb-2">
+            <label class="form-label mt-2">Histórico:</label>
+            @Html.TextArea("Historico", vDescricao, new { @class = "form-control" })
+            <span asp-validation-for="Historico" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Plano de Contas:</label>
-        <select asp-for="IdPlanoConta" class="form-control">
-            @{
-                foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
-                {
-                    if (item.Id.ToString() == vPlanoContaId.ToString())
+        <div class="form-group mb-2">
+            <label class="form-label mt-2">Plano de Contas:</label>
+            <select asp-for="IdPlanoConta" class="form-control">
+                @{
+                    foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
                     {
-                        <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        if (item.Id.ToString() == vPlanoContaId.ToString())
+                        {
+                            <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                        }
                     }
-                    else
-                    {
-                        <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
-                    }
+
                 }
-
-            }
-        </select>
-    </div>
+            </select>
+        </div>
+    </fieldset>
 
     <button type="submit" class="btn btn-block btn-success">Salvar</button>
-    <button type="submit" class="btn btn-block btn-secondary" onclick="Voltar()">Cancelar</button>
+    <button type="button" class="btn btn-block btn-secondary" onclick="Voltar()">Cancelar</button>
 
 </form>
 
 <script>
     function Voltar() {
-        window.location.href = "../Transacao";
+        window.location.href = "/Transacao";
     }
 </script>
