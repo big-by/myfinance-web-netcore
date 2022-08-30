@@ -53,11 +53,5 @@ namespace myfinance_web_netcore.Controllers
             return RedirectToAction("Index");
         }
 
-        public string OpenModelPopup()
-        {
-            //can send some data also.  
-            return "<h1>This is Modal Popup Window</h1>";
-        }
-
     }
 }

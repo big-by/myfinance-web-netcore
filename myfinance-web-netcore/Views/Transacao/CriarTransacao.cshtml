@@ -36,30 +36,61 @@
         <input type="hidden" asp-for="Id">
 
         <div class="form-group mb-2">
-            <label class="form-label mt-2">Data:</label>
+            <legend class="mt-2">Data:</legend>
             <input type="date" class="form-control" asp-for="Data" value="@vData">
             <span asp-validation-for="Data" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-2">
-            <label class="form-label mt-2">Tipo:</label>
-            <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
-        </div>
+        <legend class="mt-2">Tipo: </legend>
+        @{
+            if (vTipo == "D")
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Tipo" id="Tipo" value="R" asp-for="Tipo">
+                    <label class="form-check-label" for="Tipo">
+                        Receita
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Tipo" id="Tipo" value="D" checked="checked"
+                asp-for="Tipo">
+                    <label class="form-check-label" for="Tipo">
+                        Despesa
+                    </label>
+                </div>
+            }
+            else
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Tipo" id="Tipo" value="R" checked="checked"
+                asp-for="Tipo">
+                    <label class="form-check-label" for="Tipo">
+                        Receita
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="Tipo" id="Tipo" value="D" asp-for="Tipo">
+                    <label class="form-check-label" for="Tipo">
+                        Despesa
+                    </label>
+                </div>
+            }
+        }
 
         <div class="form-group mb-2">
-            <label class="form-label mt-2">Valor:</label>
+            <legend class="mt-2">Valor:</legend>
             <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
             <span asp-validation-for="Valor" class="text-danger"></span>
         </div>
 
         <div class="form-group mb-2">
-            <label class="form-label mt-2">Histórico:</label>
+            <legend class="mt-2">Histórico:</legend>
             @Html.TextArea("Historico", vDescricao, new { @class = "form-control" })
             <span asp-validation-for="Historico" class="text-danger"></span>
         </div>
 
         <div class="form-group mb-2">
-            <label class="form-label mt-2">Plano de Contas:</label>
+            <legend class="mt-2">Plano de Contas:</legend>
             <select asp-for="IdPlanoConta" class="form-control">
                 @{
                     foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)

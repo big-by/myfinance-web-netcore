@@ -27,10 +27,30 @@
                     onclick="EditarPlanoConta(@item.Id.ToString())">Editar</button>
                 </td>
                 <td>
-                    <button type='button' class='btn btn-block btn-danger' onclick="AbrirModal()"
-                    data-id="@item.Id.ToString()">Excluir</button>
+                    <button type='button' id="idPlanoConta" class='btn btn-block btn-danger'
+                    onclick="AbrirModal(@item.Id.ToString())">Excluir</button>
                 </td>
             </tr>
+
+            <div class="modal fade" id=@("modalPlanoConta" + @item.Id.ToString()) tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">
+                            Deseja realmente excluir este plano de conta?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="excluir" name="excluir" class="btn btn-danger"
+                            onclick="ExcluirPlanoConta(@item.Id.ToString())">Excluir</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="FecharModal(@item.Id.ToString())">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     }
 
@@ -39,27 +59,6 @@
 <button type="button" class="btn btn-block btn-primary" onclick="CriarPlanoConta()">
     Criar plano de conta
 </button>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Confirmação</h5>
-            </div>
-            <div class="modal-body">
-                Deseja realmente excluir?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="">Excluir</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    onclick="AbrirModal()">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <script>
@@ -76,8 +75,13 @@
         window.location.href = "../PlanoConta/ExcluirPlanoConta/" + id;
     }
 
-    function AbrirModal() {
-        $('#exampleModalCenter').modal('toggle');
+    function AbrirModal(id) {
+        $('#modalPlanoConta' + id).modal('show');
     }
+
+    function FecharModal(id) {
+        $('#modalPlanoConta' + id).modal('hide');
+    }
+
 
 </script>

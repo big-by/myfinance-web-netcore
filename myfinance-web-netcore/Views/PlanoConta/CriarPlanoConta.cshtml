@@ -23,10 +23,12 @@
     <fieldset>
         <input type="hidden" asp-for="Id">
 
-        <legend class="mt-4">Descrição: </legend>
+        <legend class="mt-2">Descrição: </legend>
         <div class="form-group mb-2">
             <input class="form-control" type="text" asp-for="Descricao" value=@vDescricao>
         </div>
+
+        <legend class="mt-2">Tipo: </legend>
         @{
             if (vTipo == "D")
             {

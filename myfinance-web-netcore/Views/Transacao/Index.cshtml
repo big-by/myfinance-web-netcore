@@ -34,9 +34,29 @@
                 </td>
                 <td>
                     <button type='button' class='btn btn-block btn-danger'
-                    onclick="ExcluirTransacao(@item.Id.ToString())">Excluir</button>
+                    onclick="AbrirModal(@item.Id.ToString())">Excluir</button>
                 </td>
             </tr>
+
+            <div class="modal fade" id=@("modalTransacao" + @item.Id.ToString()) tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">
+                            Deseja realmente excluir esta transação?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="excluir" name="excluir" class="btn btn-danger"
+                            onclick="ExcluirTransacao(@item.Id.ToString())">Excluir</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="FecharModal(@item.Id.ToString())">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     }
 
@@ -57,5 +77,13 @@
 
     function ExcluirTransacao(id) {
         window.location.href = "../Transacao/ExcluirTransacao/" + id;
+    }
+
+    function AbrirModal(id) {
+        $('#modalTransacao' + id).modal('show');
+    }
+
+    function FecharModal(id) {
+        $('#modalTransacao' + id).modal('hide');
     }
 </script>
